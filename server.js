@@ -11,11 +11,12 @@ const express             = require('express')
 //const hpp                 = require('hpp');
 const app                 = express()
 const PORT                = process.env.PORT || 5000;
-const LOCAL               = "127.0.0.1";
+//const LOCAL               = "127.0.0.1";
+const LOCAL               = "192.168.1.14";
 const bodyParser          = require('body-parser')
 //const compression         = require('compression');
 //const cookieParser        = require('cookie-parser');
-//const cors                = require("cors");
+const cors                = require("cors");
 const session             = require('cookie-session')
 const passport            = require('passport')
 const mongoose            = require('mongoose')
@@ -52,8 +53,8 @@ mongoose.connect(keys.mongoURI, {
 module.exports = {mongoose}
 
 // set up cors to allow us to accept requests from our client
-//app.use(cors());
-//app.options('*', cors());
+app.use(cors());
+app.options('*', cors());
 
 // required for passport
 app.use(session({ 

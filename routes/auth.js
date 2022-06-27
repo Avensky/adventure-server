@@ -58,8 +58,8 @@ module.exports  = function(app, passport) {
                 req.logIn(user, function(err) {
                 if (err) { return next(err); }
                 //return res.redirect('/profile/' + user.username);
-                console.log('res: ', res)
-                return res.sendStatus(200)
+                console.log(user)
+                return res.status(200).json(user)
                 });
             })(req, res, next);
         })
