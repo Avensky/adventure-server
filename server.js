@@ -12,7 +12,8 @@ const express             = require('express')
 const app                 = express()
 const PORT                = process.env.PORT || 5000;
 //const LOCAL               = "127.0.0.1";
-const LOCAL               = "192.168.1.14";
+//const LOCAL               = "192.168.1.14";
+const LOCAL               = "192.168.100.7";
 const bodyParser          = require('body-parser')
 //const compression         = require('compression');
 //const cookieParser        = require('cookie-parser');
@@ -39,6 +40,7 @@ if (process.env.NODE_ENV !== 'production') {
 // configuration ===============================================================
 //==============================================================================
 require('./models/users');
+require('./models/place');
 require('./config/passport')(passport); // pass passport for configuration
 
 mongoose.Promise = global.Promise;// connect to our database
@@ -60,7 +62,7 @@ app.options('*', cors());
 app.use(session({ 
   secret: 'secret',   // session secret
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: false, 
   cookie: {
       maxAge: 30*24*60*60*1000,
   }
@@ -79,7 +81,7 @@ app.use(bodyParser.json({
 // routes ======================================================================
 //==============================================================================
 require('./routes/auth.js')(app, passport); // load our routes and pass in our app and fully configured passport
-
+require('./routes/place.js')(app)
 //==============================================================================
 // launch ======================================================================
 //==============================================================================

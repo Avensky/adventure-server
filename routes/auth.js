@@ -18,13 +18,14 @@ module.exports  = function(app, passport) {
         })
     });
 
-	app.get('/api/fetchUser', async (req, res, next) => {
+	app.get('/api/fetchUser', (req, res, next) => {
+        console.log('fetching user: ', req.user)
         if (req.user){
 			res.send(req.user);
 			next();
 			return
 		}
-		res.status(401).send('Not authorized');
+		res.status(200).send('Not authorized');
 	});
 
 	
@@ -40,8 +41,11 @@ module.exports  = function(app, passport) {
     // LOGOUT ==============================
     // =====================================
     app.get('/api/logout', function(req, res) {
+        console.log('logout started')
         req.logout();
-        res.redirect('/login');
+        //res.redirect('/login');
+        console.log('user in node: ', req.user)
+        res.status(200).send("User Logged Out!")
     });
     
     // =============================================================================
@@ -54,12 +58,16 @@ module.exports  = function(app, passport) {
             console.log('login started on server')
             passport.authenticate('local-login', function(err, user, info) {
                 if (err) { return next(err); }
-                if (!user) { return res.send(info); }
+   
+                if (!user) { return res.status(200).send(info); }
+    
                 req.logIn(user, function(err) {
-                if (err) { return next(err); }
-                //return res.redirect('/profile/' + user.username);
-                console.log(user)
-                return res.status(200).json(user)
+                    console.log('user ', user)
+                    console.log('user ', err)
+                    if (err) { return next(err); }
+                    //return res.redirect('/profile/' + user.username);
+                    console.log(user)
+                    return res.status(200).json(user)
                 });
             })(req, res, next);
         })
@@ -69,14 +77,25 @@ module.exports  = function(app, passport) {
         // =====================================
             // process the signup form
             app.post('/api/signup', function(req, res, next) {
+                console.log('Signup started ', req.body)
                 passport.authenticate('local-signup', function(err, user, info) {
-                  if (err) { return next(err); }
-                  if (!user) { return res.send(info); }
-                  req.logIn(user, function(err) {
+                    console.log('err: ', err)
+                    console.log('user: ',user)
+                    console.log('info: ',info)
                     if (err) { return next(err); }
-                    // return res.redirect('/profile/' + user.username);
-                    return res.send(200)
-                  });
+                    if (!user) { 
+                        console.log('!user ', info)
+                        return res.status(200).json(info); 
+                    }
+                    if(user) {
+                        req.logIn(user, function(err) {
+                            console.log('user ', user)
+                            console.log('error ', err)
+                            if (err) { return next(err); }
+                            console.log(user)
+                            return res.status(200).json(user)
+                        });
+                    }
                 })(req, res, next);
             });
 

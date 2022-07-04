@@ -69,11 +69,11 @@ module.exports         = function(passport) {
         usernameField       : 'email',
         passwordField       : 'password',
         passReqToCallback   : true, // allows us to pass in the req from our route (lets us check if a user is logged in or not)
-//        proxy               : true
+        proxy               : true
     },
     function (req, email, password, done) {
         
-        console.log('user signup');
+        console.log('user signup req: ', req.body);
 
         // asynchronous
         process.nextTick(function() {
@@ -83,27 +83,32 @@ module.exports         = function(passport) {
             User.findOne({'local.email': email}, (err, existingUser) => {
 
                 // if there are any errors, return the error
-                if (err)
+                if (err) {
+                    console.log('user signup err: ',err);
                     return done(err);
-
+                }
                 // check to see if there's already a user with that email
-                if (existingUser) 
+                if (existingUser) {
+                    console.log('user signup existingUser: ',existingUser);
                     return done(null, false, {message: 'Oops! That email is already taken.'});
-
+                }
                 //  If we're logged in, we're connecting a new local account.
-                if(req.user) {
-                    var user            = req.user;
-                    user.local.email    = email;
-                    user.local.password = user.generateHash(password);
-                    user.save(function(err) {
-                        if (err)
-                            throw err;
-                        return done(null, user);
-                    });
+                if (req.user) {
+                    console.log('user signup req.user', req.user);
+                    return done(null, false, {message: 'Opps! Looks like some is still logged in.'})
+                //    var user            = req.user;
+                //    user.local.email    = email;
+                //    user.local.password = user.generateHash(password);
+                //    user.save(function(err) {
+                //        if (err) 
+                //            throw err;
+                //        return done(null, user);
+                //    });
                 } 
                 //  We're not logged in, so we're creating a brand new user.
                 else {
                     // create the user
+                    console.log('user signup new User');
                     var newUser            = new User();
 
                     newUser.local.email    = email;
