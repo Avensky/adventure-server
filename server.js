@@ -144,7 +144,7 @@ try {
           }
         }
         let memory = await memoryController.createMemory({...payload});
-        //res.redirect('/shop')
+        //res.redirect('/home')
         
     } catch (err) {
         console.log(err)

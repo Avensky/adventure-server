@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const {Schema} = mongoose;
+//const {Schema} = mongoose;
 
-const MemorySchema = new Schema({
+const memorySchema = new mongoose.Schema({
     title       : String,
     imageName   : String,
     imageData   : String,
@@ -13,4 +13,8 @@ const MemorySchema = new Schema({
     }
 })
 
-mongoose.model('Memory', MemorySchema);
+//mongoose.model('Memory', MemorySchema);
+
+// create the model for users and expose it to our app
+const Memory = mongoose.model("Memory", memorySchema);
+module.exports = Memory;

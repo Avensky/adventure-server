@@ -1,4 +1,5 @@
-const Memory = require("../models/memory");
+const mongoose         = require('mongoose')
+const Memory = mongoose.model("Memory");
 exports.getMemory = async () => {
     const memory = await Memory.find();
     return memory;
