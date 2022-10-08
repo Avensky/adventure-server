@@ -5,11 +5,11 @@ const memorySchema = new mongoose.Schema({
     title       : String,
     imageName   : String,
     imageData   : String,
-    imageUri    : String,
+    imageUrl    : String,
     address     : String,
     location: {
-        lat: Number,
-        lng: Number
+        lat: String,
+        lng: String
     }
 })
 
