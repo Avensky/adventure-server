@@ -4,6 +4,18 @@ exports.getMemory = async () => {
     const memory = await Memory.find();
     return memory;
 };
+
+
+exports.getMemories = (req,res) =>{          //get all items info from db
+    Memory.find({},(err,doc)=>{
+        if(doc)
+            res.json(doc);
+        else {
+            res.status(404).send('Ops!'+err)
+        }
+    })
+}
+
 exports.memoryById = async id => {
     const memory = await Memory.findById(id);
     return memory;

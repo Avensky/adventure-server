@@ -14,6 +14,12 @@ const s3 		        = new aws3.S3Client({
 });
 
 module.exports = function(app) {
+
+    //get memories from database
+
+    app.get('/api/getMemories', memoryController.getMemories)    
+
+
     //image upload params
     const storage = multerS3({
         s3: s3,

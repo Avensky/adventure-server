@@ -32,7 +32,6 @@ app.use(express.json());
 // configuration ===============================================================
 //==============================================================================
 require('./models/users');
-require('./models/place');
 require('./models/memory');
 require('./config/passport')(passport); // pass passport for configuration
 
@@ -75,7 +74,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // routes ======================================================================
 //==============================================================================
 require('./routes/auth.js')(app, passport); // load our routes and pass in our app and fully configured passport
-require('./routes/place.js')(app)
 require('./routes/memory')(app)
 
 //==============================================================================
