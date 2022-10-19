@@ -1,8 +1,20 @@
 const mongoose         = require('mongoose')
 const Memory = mongoose.model("Memory");
-exports.getMemory = async () => {
-    const memory = await Memory.find();
-    return memory;
+
+exports.getMemory = (req, res) => {
+    console.log('req.params.id', req.params)
+    console.log('req.params.id', req.params.id)
+    Memory.findOne({
+        _id : req.params.id
+    },{},(err,doc)=>{
+        if(doc){
+            console.log('doc = ', doc)
+            res.json(doc);
+        }
+        else {
+            res.status(404).send('Ops!Detail not found');
+        }
+    });
 };
 
 

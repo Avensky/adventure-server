@@ -14,9 +14,14 @@ const s3 		        = new aws3.S3Client({
 });
 
 module.exports = function(app) {
+/********************************************************************
+ * get memory from database
+********************************************************************/
+    app.get('/api/getMemory/:id', memoryController.getMemory)    
 
-    //get memories from database
-
+/********************************************************************
+ * get memories from database
+********************************************************************/
     app.get('/api/getMemories', memoryController.getMemories)    
 
 
