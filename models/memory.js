@@ -8,8 +8,8 @@ const memorySchema = new mongoose.Schema({
     imageUrl    : String,
     address     : String,
     location: {
-        lat: Number,
-        lng: Number
+        lat: String,
+        lng: String
     }
 })
 

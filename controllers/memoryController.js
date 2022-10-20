@@ -36,19 +36,24 @@ exports.createMemory = async (req,res) => {
     console.log('req.file', req.file)
     
     //parse the json object to extract body
+    //const memoryData = JSON.parse(JSON.stringify(req.body.memoryData));
+    //console.log('req.body', (req.body))
+    //console.log('req', req)
+    //const obj = JSON.parse(req.body)
+    //const obj = JSON.parse(JSON.stringify(req.body));
     const obj = JSON.parse(JSON.stringify(req.body));
     console.log('req.body', obj)
     //console.log('address', obj.address)
 
     //save data to database
     const newMemory = await Memory.create({
-        imageName   : req.file.key,
+        title       : obj.title,
+        imageName   : req.file.key, 
         imageUrl    : req.file.location,
         address     : obj.address,
-        title       : obj.title,
         location    : {
-            lng:obj.lng,
-            lat:obj.lat
+            lat:obj.lat,
+            lng:obj.lng
         }
     });
     

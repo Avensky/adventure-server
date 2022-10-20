@@ -41,12 +41,12 @@ module.exports = function(app) {
 
     // checking file type
     const fileFilter = (req, file, cb) => {
-        console.log('fileFilter mimetype = ', file.mimetype)
+        //console.log('fileFilter mimetype = ', file.mimetype)
         if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg') {
             cb(null, true);
         } else {
-            console.log('not an Image')
-    //        cb(new Error('Not an image! Please upload an image.', 400), false);
+            //console.log('not an Image')
+            //cb(new Error('Not an image! Please upload an image.', 400), false);
             cb(null, false);
         }
     };
