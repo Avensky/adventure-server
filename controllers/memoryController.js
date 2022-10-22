@@ -46,18 +46,20 @@ exports.createMemory = async (req,res) => {
     //console.log('address', obj.address)
 
     //save data to database
-    const newMemory = await Memory.create({
+    const memoryObj = {
         title       : obj.title,
         imageName   : req.file.key, 
         imageUrl    : req.file.location,
         address     : obj.address,
         location    : {
-            lat:obj.lat,
-            lng:obj.lng
+            lat: Number(obj.lat),
+            lng: Number(obj.lng)
         }
-    });
+    }
+    console.log('memoryObj', memoryObj)
+    const newMemory = await Memory.create(memoryObj);
     
-    return res.send('Successfully uploaded files!')
+    return res.json(newMemory)
     
 }
 exports.removeMemory = async id => {
